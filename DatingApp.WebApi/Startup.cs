@@ -29,6 +29,8 @@ namespace DatingApp.WebApi
         public void ConfigureServices(IServiceCollection services)
         {
 
+            services.AddCors(cors => cors.AddDefaultPolicy(p => p.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200")));
+
             services.AddDbContext<DataContext>(o => 
             {
                 o.UseSqlite(Configuration.GetConnectionString("sqlite"));
@@ -52,8 +54,10 @@ namespace DatingApp.WebApi
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "DatingApp.WebApi v1"));
             }
 
-            app.UseHttpsRedirection();
+            
+          //      app.UseHttpsRedirection();
 
+            app.UseCors();
             app.UseRouting();
 
             app.UseAuthorization();
